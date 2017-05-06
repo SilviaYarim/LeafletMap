@@ -1,0 +1,34 @@
+---
+title: "My leaflet map"
+author: "Silvia Benitez"
+output: html_document
+---
+
+##Biggest Cities in Mexico 
+##May 6th, 2017
+
+```{r, echo=FALSE, comment=NA, warning=FALSE,message=FALSE}
+library(leaflet)
+LargestCities_Mexico <- data.frame(name = c("Mexico City #1", "Iztapalapa #2", 
+                                            "Ecatepec de Morelos #3",
+                                            "Guadalajara #4","Puebla #5","Ciudad Juarez #6",
+                                            "Tijuana #7","Ciudad Nezahualcoyotl #8",
+                                            "Monterrey #9","Leon #10"),
+                        pop= c(12294193, 1820888, 1806226, 1640589, 1590256, 1512354, 1376457,
+                               1232220, 1122874, 1114626),
+                        lat = c(19.428, 19.357, 19.617,20.667, 19.038, 31.733,32.503,19.401,
+                                25.675,21.129),
+                        lng = c(-99.128,-99.067, -99.066, -103.392, -98.203,-106.483,-117.004,
+                                -99.015,-100.318,-101.674)
+                        
+)
+
+LargestCities_Mexico %>% 
+        leaflet() %>% 
+        addTiles() %>% 
+        addMarkers(clusterOptions=markerClusterOptions(), 
+                   popup= paste("City:",LargestCities_Mexico$name,"<br>",
+                                "Population:",LargestCities_Mexico$pop)) %>%
+        addCircles(weight = 2, radius = sqrt(LargestCities_Mexico$pop)*40)
+
+```
